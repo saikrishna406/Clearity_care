@@ -245,7 +245,7 @@ function Hero({ onCTA }) {
         color:B.muted, maxWidth:500, marginBottom:36,
         opacity:0, animation:"fadeUp 1s ease forwards"
       }}>
-        Clearity Care brings advanced genomic diagnostics to families who deserve to understand what happened — and why.
+        Clearity Care brings answers to parents who deserve to understand what happened and why.
       </p>
 
       {/* CTA Row */}
@@ -273,7 +273,7 @@ function Hero({ onCTA }) {
           }}
           onMouseEnter={e => { e.target.style.borderColor = B.sage; e.target.style.background = "rgba(131,164,148,0.06)"; }}
           onMouseLeave={e => { e.target.style.borderColor = "rgba(79,101,117,0.25)"; e.target.style.background = "transparent"; }}
-        >▶ Watch Our Story</button>
+        >▶ Watch the process</button>
       </div>
 
 
@@ -338,7 +338,7 @@ function Stats() {
             Based on 20 years of research on early human development.
           </p>
           <p style={{ fontSize: 15, fontWeight: 300, color: B.muted, maxWidth: 600, margin: "0 auto", lineHeight: 1.7 }}>
-            Built together with a team of medical doctors from Amsterdam UMC. Created with compassion, clarity and scientific integrity.
+            Built together with a team of medical doctors from Amsterdam UMC.<br/>Created with compassion, clarity and scientific integrity.
           </p>
           <div style={{ fontSize: 13, fontWeight: 600, color: B.sage, textTransform: "uppercase", letterSpacing: "0.08em", marginTop: 8 }}>
             From parents to parents. Through science.
@@ -497,12 +497,12 @@ function Founders() {
               display:"flex", gap:20, alignItems:"center"
             }}>
               <div style={{ textAlign:"center", flex:1 }}>
-                <div style={{ fontSize:11, fontWeight:600, color:B.sage, textTransform:"uppercase", letterSpacing:"0.08em" }}>Bernadette</div>
+                <div style={{ fontSize:11, fontWeight:600, color:B.sage, textTransform:"uppercase", letterSpacing:"0.08em" }}>Bernadette de Bakker</div>
                 <div style={{ fontSize:10, fontWeight:300, color:B.muted }}>Chief Medical Officer</div>
               </div>
               <div style={{ width:1, height:28, background:B.stone, opacity:0.3 }}/>
               <div style={{ textAlign:"center", flex:1 }}>
-                <div style={{ fontSize:11, fontWeight:600, color:B.sage, textTransform:"uppercase", letterSpacing:"0.08em" }}>Madeleine</div>
+                <div style={{ fontSize:11, fontWeight:600, color:B.sage, textTransform:"uppercase", letterSpacing:"0.08em" }}>Madeleine de Bakker</div>
                 <div style={{ fontSize:10, fontWeight:300, color:B.muted }}>Chief Executive Officer</div>
               </div>
             </div>
@@ -730,12 +730,12 @@ function Closing({ onCTA }) {
           <span style={{ width:24, height:1, background:"#fff", opacity:0.5 }}/>
         </div>
         <h2 style={{ fontSize:"clamp(24px,4vw,40px)", fontWeight:800, color:"#fff",
-          letterSpacing:"-0.025em", lineHeight:1.15, maxWidth:520, margin:"0 auto 16px" }}>
-          One of medicine's most important questions — finally answered
+          letterSpacing:"-0.025em", lineHeight:1.15, maxWidth:600, margin:"0 auto 16px" }}>
+          Giving all parents worldwide the answers they deserve
         </h2>
         <p style={{ fontSize:16, fontWeight:400, color:"#fff",
-          maxWidth:480, margin:"0 auto 0px", lineHeight:1.7 }}>
-          We are bringing genomic clarity to early pregnancy loss. The science is ready. The families are waiting.
+          maxWidth:640, margin:"0 auto 0px", lineHeight:1.7 }}>
+          We are building a new foundation for understanding pregnancy loss and early human development through science, compassion and breakthrough technology
         </p>
       </div>
     </section>
