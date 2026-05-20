@@ -513,7 +513,7 @@ function Founders() {
           opacity: txtVis ? 1 : 0, transform: txtVis ? "translateX(0)" : "translateX(28px)",
           transition:"opacity .8s ease .1s, transform .8s cubic-bezier(0.34,1.2,0.64,1) .1s"
         }}>
-          <SectionLabel text="Mission" />
+          <SectionLabel text="The Founding Mothers" />
           <h2 style={{ fontSize:"clamp(22px,3.5vw,34px)", fontWeight:800, color:B.slate, lineHeight:1.15, letterSpacing:"-0.02em", margin:"8px 0 20px" }}>
             From parents to parents. Through science.
           </h2>
