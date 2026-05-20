@@ -218,7 +218,7 @@ function Hero({ onCTA }) {
         opacity:0, animation:"fadeUp 0.8s ease forwards"
       }}>
         <span style={{ width:28, height:1, background:B.sage, opacity:0.45 }}/>
-        Genomic Diagnostics · Amsterdam
+        Clearity Care · Amsterdam
         <span style={{ width:28, height:1, background:B.sage, opacity:0.45 }}/>
       </div>
 
@@ -276,8 +276,6 @@ function Hero({ onCTA }) {
         >▶ Watch Our Story</button>
       </div>
 
-      {/* Trust strip */}
-      <TrustStrip />
 
     </section>
   );
@@ -304,40 +302,18 @@ function DnaDecoration() {
   );
 }
 
-function TrustStrip() {
-  const [ref, vis] = useReveal(0.3);
-  const items = ["Amsterdam UMC", "Dutch Fetal Biobank", "20+ Years Research"];
-  return (
-    <div ref={ref} className="trust-strip" style={{
-      display:"flex", alignItems:"center", justifyContent:"center",
-      gap:"8px 28px", flexWrap:"wrap",
-      opacity: vis ? 1 : 0, transform: vis ? "translateY(0)" : "translateY(12px)",
-      transition:"opacity .7s ease .2s, transform .7s ease .2s"
-    }}>
-      {items.map((item, i) => (
-        <div key={item} style={{ display:"flex", alignItems:"center", gap:10, flexWrap:"wrap", justifyContent:"center" }}>
-          <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-            <div style={{ width:6, height:6, borderRadius:"50%", background:B.sage, flexShrink:0 }}/>
-            <span style={{ fontSize:12, fontWeight:500, color:B.muted, letterSpacing:"0.04em" }}>{item}</span>
-          </div>
-          {i < items.length - 1 && (
-            <div className="trust-divider" style={{ width:1, height:16, background:B.stone, opacity:0.35 }}/>
-          )}
-        </div>
-      ))}
-    </div>
-  );
-}
+
 
 
 /* ─── STATS SECTION ────────────────────────────────────────── */
 function Stats() {
   const [ref, vis] = useReveal(0.15);
   const stats = [
-    { val: 1, suffix: " in 4", label: "pregnancies end in loss", detail: "An estimated 23 million miscarriages occur every year globally.", highlight: true },
-    { val: 70, suffix: "%", label: "cases go unexplained", detail: null, highlight: false },
-    { val: 20, suffix: "+", label: "years of research", detail: null, highlight: false },
-    { val: 98, suffix: "%", label: "of parents want answers", detail: null, highlight: false },
+    { val: 15, suffix: "%", label: "of all confirmed pregnancies ends in pregnancy loss", detail: null, highlight: true },
+    { val: 23, suffix: " million", label: "miscarriages occur every year", detail: null, highlight: false },
+    { val: 44, suffix: "", label: "pregnancies are lost worldwide every minute", detail: null, highlight: false },
+    { val: 1, suffix: "/10", label: "couples has to deal with one or more losses", detail: null, highlight: false },
+    { val: 90, suffix: "%", label: "of the times, the answer is we don't know what happened", detail: null, highlight: false },
   ];
   return (
     <section style={{ padding:"80px 24px", background:B.white, position:"relative" }}>
@@ -346,11 +322,27 @@ function Stats() {
       <div style={{ maxWidth:900, margin:"0 auto" }}>
         <SectionTitle text="Why this matters" center />
         <div ref={ref} className="stats-grid" style={{
-          display:"grid", gridTemplateColumns:"repeat(2,1fr)", gap:20, marginTop:48
+          display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(260px, 1fr))", gap:20, marginTop:48
         }}>
           {stats.map((s, i) => (
             <StatCard key={i} {...s} visible={vis} delay={i * 100} />
           ))}
+        </div>
+
+        <div style={{
+          marginTop: 64, textAlign: "center", display: "flex", flexDirection: "column", gap: 16,
+          opacity: vis ? 1 : 0, transform: vis ? "translateY(0)" : "translateY(20px)",
+          transition: "opacity .8s ease .6s, transform .8s ease .6s"
+        }}>
+          <p style={{ fontSize: "clamp(16px, 2.5vw, 18px)", fontWeight: 500, color: B.slate }}>
+            Based on 20 years of research on early human development.
+          </p>
+          <p style={{ fontSize: 15, fontWeight: 300, color: B.muted, maxWidth: 600, margin: "0 auto", lineHeight: 1.7 }}>
+            Built together with a team of medical doctors from Amsterdam UMC. Created with compassion, clarity and scientific integrity.
+          </p>
+          <div style={{ fontSize: 13, fontWeight: 600, color: B.sage, textTransform: "uppercase", letterSpacing: "0.08em", marginTop: 8 }}>
+            From parents to parents. Through science.
+          </div>
         </div>
       </div>
     </section>
@@ -416,7 +408,7 @@ function HowItWorks() {
         <SectionLabel text="The Process" center />
         <SectionTitle text="From loss to understanding" center />
         <p style={{ fontSize:15, fontWeight:300, color:B.muted, textAlign:"center", maxWidth:560, margin:"12px auto 52px", lineHeight:1.7 }}>
-          Six steps that transform the most uncertain moment into scientific clarity.
+          Six steps that transform uncertainty into scientific clarity.
         </p>
         <div ref={ref} style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))", gap:20, marginBottom:64 }}>
           {steps.map((s, i) => (
@@ -424,10 +416,10 @@ function HowItWorks() {
           ))}
         </div>
         {/* Embedded video */}
-        <SectionLabel text="Our Story" center />
+        <SectionLabel text="How we do this" center />
         <SectionTitle text="See the science behind the mission" center />
-        <p style={{ fontSize:15, fontWeight:300, color:B.muted, textAlign:"center", lineHeight:1.7, maxWidth:500, margin:"12px auto 36px" }}>
-          Watch how Clearity Care is transforming one of medicine's most overlooked moments.
+        <p style={{ fontSize:15, fontWeight:300, color:B.muted, textAlign:"center", lineHeight:1.7, maxWidth:640, margin:"12px auto 36px" }}>
+          Watch how Clearity Care combines advanced genetics, ultra-high resolution Micro-CT imaging and world-leading embryology expertise to help parents better understand why a pregnancy ended in loss.
         </p>
         <div ref={vidRef} style={{
           borderRadius:20, overflow:"hidden", position:"relative",
@@ -504,14 +496,14 @@ function Founders() {
               borderRadius:12, padding:"12px 16px",
               display:"flex", gap:20, alignItems:"center"
             }}>
-              <div style={{ textAlign:"center" }}>
-                <div style={{ fontSize:11, fontWeight:600, color:B.sage, textTransform:"uppercase", letterSpacing:"0.08em" }}>Madeleine</div>
-                <div style={{ fontSize:10, fontWeight:300, color:B.muted }}>Scientific Lead</div>
+              <div style={{ textAlign:"center", flex:1 }}>
+                <div style={{ fontSize:11, fontWeight:600, color:B.sage, textTransform:"uppercase", letterSpacing:"0.08em" }}>Bernadette</div>
+                <div style={{ fontSize:10, fontWeight:300, color:B.muted }}>Chief Medical Officer</div>
               </div>
               <div style={{ width:1, height:28, background:B.stone, opacity:0.3 }}/>
-              <div style={{ textAlign:"center" }}>
-                <div style={{ fontSize:11, fontWeight:600, color:B.sage, textTransform:"uppercase", letterSpacing:"0.08em" }}>Bernadette</div>
-                <div style={{ fontSize:10, fontWeight:300, color:B.muted }}>Clinical Operations</div>
+              <div style={{ textAlign:"center", flex:1 }}>
+                <div style={{ fontSize:11, fontWeight:600, color:B.sage, textTransform:"uppercase", letterSpacing:"0.08em" }}>Madeleine</div>
+                <div style={{ fontSize:10, fontWeight:300, color:B.muted }}>Chief Executive Officer</div>
               </div>
             </div>
           </div>
@@ -758,8 +750,8 @@ function Footer() {
       borderTop:"1px solid rgba(255,255,255,0.06)",
       display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:12
     }}>
-      <div style={{ display:"flex", alignItems:"center" }}>
-        <LogoIcon size={32} style={{ filter: "brightness(0) invert(1)" }}/>
+      <div style={{ display:"flex", alignItems:"center", background:"#fff", padding:"6px 14px", borderRadius:8 }}>
+        <LogoIcon size={28} />
       </div>
       <div style={{ fontSize:11, color:"#fff", letterSpacing:"0.04em", fontWeight:400 }}>
         © 2026 Clearity Care · All rights reserved
@@ -812,8 +804,8 @@ export default function App() {
       <Nav onCTA={scrollToForm} />
       <main>
         <Hero onCTA={scrollToForm} />
-        <Closing onCTA={scrollToForm} />
         <Stats />
+        <Closing onCTA={scrollToForm} />
         <HowItWorks />
         <Founders />
         <FormSection />
