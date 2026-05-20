@@ -9,7 +9,7 @@ const B = {
   offwhite: "#faf7f4",
   white:    "#ffffff",
   text:     "#2d3a42",
-  muted:    "#6b7c88",
+  muted:    "#3d5060",
 };
 
 /* ─── GLOBAL STYLES (injected once) ──────────────────────────── */
@@ -228,23 +228,16 @@ function Hero({ onCTA }) {
         color:B.slate, letterSpacing:"-0.025em", maxWidth:720, marginBottom:22,
         opacity:0, animation:"fadeUp 0.9s ease forwards"
       }}>
-        Finally{" "}
-        <span style={{
-          color:B.sage, display:"inline-block",
-          transition:"opacity .3s ease, transform .3s ease",
-          opacity: wordVisible ? 1 : 0,
-          transform: wordVisible ? "translateY(0)" : "translateY(-8px)"
-        }}>{words[wordIdx]}</span>
-        <br/>after pregnancy loss
+        Finally answers after pregnancy loss.
       </h1>
 
       {/* Sub */}
       <p className="stagger-3" style={{
-        fontSize:"clamp(15px,2.2vw,18px)", fontWeight:300, lineHeight:1.75,
-        color:B.muted, maxWidth:500, marginBottom:36,
+        fontSize:"clamp(18px,2.5vw,22px)", fontWeight:400, lineHeight:1.5,
+        color:B.sage, maxWidth:500, marginBottom:36,
         opacity:0, animation:"fadeUp 1s ease forwards"
       }}>
-        Clearity Care brings advanced genomic diagnostics to families who deserve to understand what happened — and why.
+        It is about time...
       </p>
 
       {/* CTA Row */}
@@ -278,8 +271,6 @@ function Hero({ onCTA }) {
       {/* Trust strip */}
       <TrustStrip />
 
-      {/* Scroll hint */}
-      <ScrollHint />
     </section>
   );
 }
@@ -330,37 +321,24 @@ function TrustStrip() {
   );
 }
 
-function ScrollHint() {
-  return (
-    <div style={{
-      position:"absolute", bottom:32, left:"50%", transform:"translateX(-50%)",
-      display:"flex", flexDirection:"column", alignItems:"center", gap:6, opacity:0.45,
-      animation:"floatY 2.5s ease-in-out infinite"
-    }}>
-      <span style={{ fontSize:10, fontWeight:400, color:B.muted, letterSpacing:"0.1em", textTransform:"uppercase" }}>Scroll</span>
-      <div style={{ width:1, height:28, background:`linear-gradient(to bottom, ${B.muted}, transparent)` }}/>
-    </div>
-  );
-}
 
-/* ─── STATS SECTION ──────────────────────────────────────────── */
+/* ─── STATS SECTION ────────────────────────────────────────── */
 function Stats() {
   const [ref, vis] = useReveal(0.15);
   const stats = [
-    { val: 1, suffix: " in 4", label: "pregnancies end in loss", detail: "An estimated 23 million miscarriages occur every year globally." },
-    { val: 70, suffix: "%", label: "cases go unexplained", detail: "Most families receive no genetic or pathological diagnosis." },
-    { val: 20, suffix: "+", label: "years of research", detail: "Our science is built on two decades of clinical expertise." },
-    { val: 98, suffix: "%", label: "of parents want answers", detail: "Yet fewer than 5% currently receive advanced diagnostics." },
+    { val: 1, suffix: " in 4", label: "pregnancies end in loss", detail: "An estimated 23 million miscarriages occur every year globally.", highlight: true },
+    { val: 70, suffix: "%", label: "cases go unexplained", detail: null, highlight: false },
+    { val: 20, suffix: "+", label: "years of research", detail: null, highlight: false },
+    { val: 98, suffix: "%", label: "of parents want answers", detail: null, highlight: false },
   ];
   return (
     <section style={{ padding:"80px 24px", background:B.white, position:"relative" }}>
       <div style={{ position:"absolute", top:0, left:0, right:0, height:1,
         background:`linear-gradient(90deg, transparent, rgba(131,164,148,0.25), transparent)` }}/>
       <div style={{ maxWidth:900, margin:"0 auto" }}>
-        <SectionLabel text="The Scope" center />
         <SectionTitle text="Why this matters" center />
         <div ref={ref} className="stats-grid" style={{
-          display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:20, marginTop:48
+          display:"grid", gridTemplateColumns:"repeat(2,1fr)", gap:20, marginTop:48
         }}>
           {stats.map((s, i) => (
             <StatCard key={i} {...s} visible={vis} delay={i * 100} />
@@ -371,141 +349,118 @@ function Stats() {
   );
 }
 
-function StatCard({ val, suffix, label, detail, visible, delay }) {
-  const [hovered, setHovered] = useState(false);
+function StatCard({ val, suffix, label, detail, highlight, visible, delay }) {
   return (
     <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
       style={{
-        background: hovered ? B.slate : B.offwhite,
-        border:`1.5px solid ${hovered ? "transparent" : "rgba(181,172,161,0.25)"}`,
-        borderRadius:16, padding:"28px 22px", textAlign:"center",
-        cursor:"default", transition:"all .35s cubic-bezier(0.34,1.56,0.64,1)",
-        transform: visible ? (hovered ? "translateY(-6px) scale(1.02)" : "translateY(0)") : "translateY(20px)",
+        background: highlight ? B.slate : B.offwhite,
+        border: highlight ? `1.5px solid transparent` : `1.5px solid rgba(181,172,161,0.22)`,
+        borderRadius:16, padding: detail ? "28px 22px" : "40px 22px", textAlign:"center",
+        cursor:"default",
+        transform: visible ? "translateY(0)" : "translateY(20px)",
         opacity: visible ? 1 : 0,
-        transitionDelay: `${delay}ms`,
-        boxShadow: hovered ? `0 20px 48px rgba(79,101,117,0.18)` : "none"
+        transition: `opacity .6s ease ${delay}ms, transform .6s ease ${delay}ms`,
+        boxShadow: highlight ? `0 12px 40px rgba(79,101,117,0.15)` : `0 4px 16px rgba(79,101,117,0.04)`,
+        display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"
       }}
     >
       <div style={{
-        fontSize:"clamp(28px,4vw,40px)", fontWeight:800, lineHeight:1,
-        color: hovered ? B.cream : B.slate, marginBottom:8,
+        fontSize:"clamp(32px,4vw,44px)", fontWeight:800, lineHeight:1.1,
+        color: highlight ? B.cream : B.slate, marginBottom:8,
         animation: visible ? `countUp .6s ease ${delay}ms both` : "none"
       }}>
         {visible ? <AnimCounter to={val} suffix={suffix} /> : `0${suffix}`}
       </div>
-      <div style={{ fontSize:13, fontWeight:500, color: hovered ? "rgba(252,225,197,0.75)" : B.muted, lineHeight:1.4, marginBottom: hovered ? 8 : 0, transition:"all .3s" }}>
+      <div style={{ fontSize:15, fontWeight:500, color: highlight ? "rgba(252,225,197,0.75)" : B.muted, lineHeight:1.4, marginBottom: detail ? 10 : 0 }}>
         {label}
       </div>
-      <div style={{
-        fontSize:11.5, fontWeight:300, color:"rgba(252,225,197,0.6)", lineHeight:1.55,
-        maxHeight: hovered ? 60 : 0, overflow:"hidden", transition:"max-height .35s ease, opacity .3s",
-        opacity: hovered ? 1 : 0
-      }}>
-        {detail}
-      </div>
+      {detail && (
+        <div style={{ fontSize:12, fontWeight:300, color: highlight ? "rgba(252,225,197,0.5)" : "rgba(79,101,117,0.6)", lineHeight:1.55, maxWidth:240 }}>
+          {detail}
+        </div>
+      )}
     </div>
   );
 }
 
-/* ─── VIDEO SECTION ──────────────────────────────────────────── */
-function VideoSection() {
-  const [ref, vis] = useReveal(0.1);
-  const [playing, setPlaying] = useState(false);
-  return (
-    <section id="video-section" style={{ padding:"80px 24px", background:B.offwhite }}>
-      <div style={{ maxWidth:760, margin:"0 auto" }}>
-        <SectionLabel text="Our Story" center />
-        <SectionTitle text="See the science behind the mission" center />
-        <p style={{ fontSize:15, fontWeight:300, color:B.muted, textAlign:"center", lineHeight:1.7, maxWidth:500, margin:"12px auto 40px" }}>
-          Watch how Clearity Care is transforming one of medicine's most overlooked moments.
-        </p>
-        <div ref={ref} style={{
-          borderRadius:20, overflow:"hidden", position:"relative",
-          boxShadow:`0 24px 72px rgba(79,101,117,0.14), 0 4px 16px rgba(79,101,117,0.07)`,
-          opacity: vis ? 1 : 0, transform: vis ? "translateY(0) scale(1)" : "translateY(24px) scale(0.98)",
-          transition:"opacity .8s ease, transform .8s cubic-bezier(0.34,1.2,0.64,1)"
-        }}>
-          <div style={{
-            position:"absolute", inset:0, border:`1px solid rgba(131,164,148,0.22)`,
-            borderRadius:20, pointerEvents:"none", zIndex:2
-          }}/>
-            <iframe
-              width="100%"
-              style={{ display:"block", aspectRatio:"16/9", border:"none", position:"relative", zIndex:3 }}
-              src="https://www.youtube.com/embed/OBXBpbB7tG0?rel=0&modestbranding=1&color=white"
-              title="Clearity Care — Explainer"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ─── HOW IT WORKS ───────────────────────────────────────────── */
-const Icon1 = () => <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>;
-const Icon2 = () => <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>;
-const Icon3 = () => <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M9 14h6"/><path d="M9 10h6"/></svg>;
-const Icon4 = () => <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>;
+/* ─── HOW IT WORKS (with embedded video) ───────────────────────── */
+const IStep0 = () => <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>;
+const IStep1 = () => <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>;
+const IStep2 = () => <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>;
+const IStep3 = () => <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>;
+const IStep4 = () => <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M9 14h6"/><path d="M9 10h6"/></svg>;
+const IStep5 = () => <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>;
 
 function HowItWorks() {
   const steps = [
-    { n:"01", icon:<Icon1/>, title:"Sample Collection", body:"A minimally invasive sample is taken after pregnancy loss, handled with the utmost care and dignity." },
-    { n:"02", icon:<Icon2/>, title:"Genomic Analysis", body:"Using advanced whole-genome sequencing, we map chromosomal and genetic abnormalities at the highest resolution." },
-    { n:"03", icon:<Icon3/>, title:"Expert Interpretation", body:"Our clinical team of geneticists and pathologists translates complex data into understandable medical insight." },
-    { n:"04", icon:<Icon4/>, title:"Personal Consultation", body:"Findings are delivered through a compassionate consultation — giving families the clarity they deserve." },
+    { n:"00", icon:<IStep0/>, title:"Onboarding", body:"We start by informing potential parents about the procedure, explaining how it works, and providing a collection kit in case of pregnancy loss." },
+    { n:"01", icon:<IStep1/>, title:"Send or bring your tissue", body:"If a miscarriage happens, parents send or bring us the collected tissue and DNA samples safely and securely." },
+    { n:"02", icon:<IStep2/>, title:"Genetic analysis", body:"We investigate possible genetic or chromosomal causes of pregnancy loss." },
+    { n:"03", icon:<IStep3/>, title:"Advanced MicroCT imaging", body:"If the genetic result is inconclusive, we use ultra-high resolution imaging to examine early development in exceptional detail and make an anatomical assessment." },
+    { n:"04", icon:<IStep4/>, title:"Expert interpretation", body:"Our embryology specialists carefully analyze the findings using years of scientific expertise and reference data." },
+    { n:"05", icon:<IStep5/>, title:"Clear reporting", body:"You receive a clear and compassionate report with the findings and possible explanations." },
   ];
-  const [active, setActive] = useState(null);
   const [ref, vis] = useReveal(0.1);
+  const [vidRef, vidVis] = useReveal(0.1);
   return (
-    <section style={{ padding:"80px 24px", background:`linear-gradient(175deg, ${B.white} 0%, rgba(252,225,197,0.08) 100%)` }}>
-      <div style={{ maxWidth:880, margin:"0 auto" }}>
+    <section id="video-section" style={{ padding:"80px 24px", background:`linear-gradient(175deg, ${B.white} 0%, rgba(252,225,197,0.08) 100%)` }}>
+      <div style={{ maxWidth:960, margin:"0 auto" }}>
         <SectionLabel text="The Process" center />
         <SectionTitle text="From loss to understanding" center />
-        <p style={{ fontSize:15, fontWeight:300, color:B.muted, textAlign:"center", maxWidth:480, margin:"12px auto 52px", lineHeight:1.7 }}>
-          Four steps that transform the most uncertain moment into scientific clarity.
+        <p style={{ fontSize:15, fontWeight:300, color:B.muted, textAlign:"center", maxWidth:560, margin:"12px auto 52px", lineHeight:1.7 }}>
+          Six steps that transform the most uncertain moment into scientific clarity.
         </p>
-        <div ref={ref} style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))", gap:20 }}>
+        <div ref={ref} style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))", gap:20, marginBottom:64 }}>
           {steps.map((s, i) => (
-            <StepCard key={i} {...s} index={i} active={active === i} onToggle={() => setActive(active === i ? null : i)} visible={vis} />
+            <StepCard key={i} {...s} index={i} visible={vis} />
           ))}
+        </div>
+        {/* Embedded video */}
+        <SectionLabel text="Our Story" center />
+        <SectionTitle text="See the science behind the mission" center />
+        <p style={{ fontSize:15, fontWeight:300, color:B.muted, textAlign:"center", lineHeight:1.7, maxWidth:500, margin:"12px auto 36px" }}>
+          Watch how Clearity Care is transforming one of medicine's most overlooked moments.
+        </p>
+        <div ref={vidRef} style={{
+          borderRadius:20, overflow:"hidden", position:"relative",
+          boxShadow:`0 24px 72px rgba(79,101,117,0.14), 0 4px 16px rgba(79,101,117,0.07)`,
+          opacity: vidVis ? 1 : 0, transform: vidVis ? "translateY(0) scale(1)" : "translateY(24px) scale(0.98)",
+          transition:"opacity .8s ease, transform .8s cubic-bezier(0.34,1.2,0.64,1)"
+        }}>
+          <div style={{ position:"absolute", inset:0, border:`1px solid rgba(131,164,148,0.22)`, borderRadius:20, pointerEvents:"none", zIndex:2 }}/>
+          <iframe
+            width="100%"
+            style={{ display:"block", aspectRatio:"16/9", border:"none", position:"relative", zIndex:3 }}
+            src="https://www.youtube.com/embed/OBXBpbB7tG0?rel=0&modestbranding=1&color=white"
+            title="Clearity Care — Explainer"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
         </div>
       </div>
     </section>
   );
 }
 
-function StepCard({ n, icon, title, body, index, active, onToggle, visible }) {
+function StepCard({ n, icon, title, body, index, visible }) {
   return (
     <div
-      onClick={onToggle}
       style={{
-        background: active ? B.slate : B.white,
-        border:`1.5px solid ${active ? "transparent" : "rgba(181,172,161,0.22)"}`,
-        borderRadius:16, padding:"28px 24px", cursor:"pointer",
-        transition:"all .35s cubic-bezier(0.34,1.2,0.64,1)",
-        transform: visible ? (active ? "translateY(-4px)" : "translateY(0)") : "translateY(24px)",
+        background: B.white,
+        border:`1.5px solid rgba(181,172,161,0.22)`,
+        borderRadius:16, padding:"28px 24px",
+        transform: visible ? "translateY(0)" : "translateY(24px)",
         opacity: visible ? 1 : 0,
-        transitionDelay: `${index * 90}ms`,
-        boxShadow: active ? `0 16px 48px rgba(79,101,117,0.2)` : "none"
+        transition: `opacity .6s ease ${index * 80}ms, transform .6s ease ${index * 80}ms`,
+        boxShadow: `0 4px 16px rgba(79,101,117,0.06)`
       }}
     >
       <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", marginBottom:16 }}>
-        <div style={{ color: active ? B.cream : B.sage, display: "flex", alignItems: "center" }}>{icon}</div>
-        <div style={{ fontSize:12, fontWeight:700, color: active ? `rgba(252,225,197,0.4)` : "rgba(181,172,161,0.6)", letterSpacing:"0.06em" }}>{n}</div>
+        <div style={{ color: B.sage, display:"flex", alignItems:"center" }}>{icon}</div>
+        <div style={{ fontSize:12, fontWeight:700, color:"rgba(181,172,161,0.6)", letterSpacing:"0.06em" }}>{n}</div>
       </div>
-      <div style={{ fontSize:15, fontWeight:700, color: active ? B.cream : B.slate, marginBottom:10, lineHeight:1.3 }}>{title}</div>
-      <div style={{
-        fontSize:13.5, fontWeight:300, color: active ? `rgba(252,225,197,0.7)` : B.muted,
-        lineHeight:1.65, maxHeight: active ? 120 : 0, overflow:"hidden",
-        transition:"max-height .35s ease, opacity .3s", opacity: active ? 1 : 0
-      }}>{body}</div>
-      {!active && (
-        <div style={{ fontSize:12, color:B.sage, marginTop:12, fontWeight:500 }}>Tap to learn more →</div>
-      )}
+      <div style={{ fontSize:15, fontWeight:700, color: B.slate, marginBottom:10, lineHeight:1.3 }}>{title}</div>
+      <div style={{ fontSize:13.5, fontWeight:300, color: B.muted, lineHeight:1.65 }}>{body}</div>
     </div>
   );
 }
@@ -558,24 +513,17 @@ function Founders() {
           opacity: txtVis ? 1 : 0, transform: txtVis ? "translateX(0)" : "translateX(28px)",
           transition:"opacity .8s ease .1s, transform .8s cubic-bezier(0.34,1.2,0.64,1) .1s"
         }}>
-          <SectionLabel text="The Founders" />
+          <SectionLabel text="Mission" />
           <h2 style={{ fontSize:"clamp(22px,3.5vw,34px)", fontWeight:800, color:B.slate, lineHeight:1.15, letterSpacing:"-0.02em", margin:"8px 0 20px" }}>
-            Built by those who understand the weight of not knowing
+            From parents to parents. Through science.
           </h2>
-          <p style={{ fontSize:15, fontWeight:300, color:B.muted, lineHeight:1.8, marginBottom:16 }}>
-            Clearity Care was founded by researchers and advocates who believe every family deserves scientific clarity after loss. Backed by Amsterdam UMC and the Dutch Fetal Biobank.
-          </p>
-          <p style={{ fontSize:15, fontWeight:300, color:B.muted, lineHeight:1.8, marginBottom:28 }}>
-            We are turning one of medicine's biggest blind spots into a breakthrough diagnostic service — built on compassion, precision, and 20+ years of clinical science.
-          </p>
-          <div style={{ display:"flex", gap:12 }}>
-            {["Amsterdam UMC", "Dutch Fetal Biobank"].map(tag => (
-              <div key={tag} style={{
-                fontSize:11, fontWeight:600, color:B.sage,
-                background:"rgba(131,164,148,0.1)", border:`1px solid rgba(131,164,148,0.25)`,
-                borderRadius:100, padding:"6px 14px", letterSpacing:"0.04em"
-              }}>{tag}</div>
-            ))}
+          <div style={{ fontSize:14.5, fontWeight:300, color:B.muted, lineHeight:1.7, display:"flex", flexDirection:"column", gap:14, marginBottom:28 }}>
+            <p>Clearity Care was founded by sisters Madeleine and Bernadette de Bakker, driven by both scientific expertise and personal experience.</p>
+            <p>Bernadette de Bakker, MD PhD, is a leading embryologist specialized in early human development and advanced embryo imaging. As a mother of four who experienced three miscarriages herself, she understands both the scientific and human side of pregnancy loss.</p>
+            <p>Madeleine de Bakker combines strategic leadership, empathy and a future-driven vision to connect science, healthcare and innovation. After a long fertility journey and becoming a mother of three, she is committed to transforming how pregnancy loss is understood and supported worldwide.</p>
+            <p>By combining breakthrough technology with compassionate care, we are building a new foundation for miscarriage research, understanding and future care.</p>
+            <p>Every case contributes to better understanding, future research and improved care for the next generation.</p>
+            <p>Together, they are building a future where fewer parents are left without answers.</p>
           </div>
         </div>
       </div>
@@ -629,22 +577,27 @@ function FormSection() {
 
         {!submitted ? (
           <>
-            <SectionLabel text="Join Us" center />
-            <SectionTitle text="Be part of what comes next" center />
-            <p style={{ fontSize:15, fontWeight:300, color:B.muted, textAlign:"center", lineHeight:1.7, maxWidth:420, margin:"10px auto 36px" }}>
-              Whether you're a parent seeking answers or an investor in meaningful healthcare — we'd love to hear from you.
-            </p>
+            <SectionTitle text="Join us" center />
+            <div style={{ fontSize:15, fontWeight:300, color:B.muted, textAlign:"center", lineHeight:1.7, maxWidth:580, margin:"16px auto 40px", display:"flex", flexDirection:"column", gap:16 }}>
+              <p>Clearity Care paves the way to understanding pregnancy loss and early human development.</p>
+              <p>Join us to stay informed about our progress, research developments and early opportunities to be part of the future of pregnancy loss and care.</p>
+              <p>For parents. For healthcare professionals. For early supporters and investors who believe healthcare can do better.</p>
+            </div>
 
             {/* Tab switcher */}
             <div style={{
               display:"flex", background:B.offwhite, borderRadius:100,
               padding:4, marginBottom:32, border:`1px solid rgba(181,172,161,0.2)`
             }}>
-              {[{k:"parent", label:"I'm a Parent"}, {k:"investor", label:"I'm an Investor"}].map(t => (
-                <button key={t.k} onClick={() => { setTab(t.k); setForm(f => ({...f, category: t.k === "investor" ? "investor" : ""})); }}
+              {[
+                {k:"parent", label:"I'm a Parent"},
+                {k:"investor", label:"I'm an Investor"},
+                {k:"institution", label:"I'm from an Institution"}
+              ].map(t => (
+                <button key={t.k} onClick={() => { setTab(t.k); setForm(f => ({...f, category: t.k})); }}
                   style={{
-                    flex:1, fontFamily:"'Poppins',sans-serif", fontSize:13, fontWeight:600,
-                    border:"none", borderRadius:100, padding:"10px 0", cursor:"pointer",
+                    flex:1, fontFamily:"'Poppins',sans-serif", fontSize:12, fontWeight:600,
+                    border:"none", borderRadius:100, padding:"10px 4px", cursor:"pointer",
                     background: tab === t.k ? B.slate : "transparent",
                     color: tab === t.k ? "#fff" : B.muted,
                     transition:"all .25s"
@@ -667,21 +620,6 @@ function FormSection() {
                       onChange={e => { setForm(f=>({...f,email:e.target.value})); setErrors(er=>({...er,email:false})); }}/>
                   </Field>
                 </div>
-
-                <Field id="country" label="Country">
-                  <input className={errors.country ? "error" : ""} value={form.country} placeholder="Netherlands"
-                    onChange={e => { setForm(f=>({...f,country:e.target.value})); setErrors(er=>({...er,country:false})); }}/>
-                </Field>
-
-                <Field id="category" label="I am a">
-                  <select className={errors.category ? "error" : ""} value={form.category}
-                    onChange={e => { setForm(f=>({...f,category:e.target.value})); setErrors(er=>({...er,category:false})); }}>
-                    <option value="" disabled>Select your role</option>
-                    <option value="parent">Parent</option>
-                    <option value="professional">Healthcare Professional</option>
-                    <option value="investor">Potential Investor</option>
-                  </select>
-                </Field>
 
                 <Field id="phone" label="Phone" optional>
                   <input type="tel" value={form.phone} placeholder="+31 6 00 00 00 00"
@@ -774,40 +712,31 @@ function Closing({ onCTA }) {
   const [ref, vis] = useReveal(0.15);
   return (
     <section style={{
-      padding:"96px 24px", background:B.slate, textAlign:"center",
+      padding:"96px 24px", background:B.sage, textAlign:"center",
       position:"relative", overflow:"hidden"
     }}>
       <div style={{ position:"absolute", top:-80, left:"50%", transform:"translateX(-50%)",
         width:600, height:400, borderRadius:"50%",
-        background:"radial-gradient(circle, rgba(131,164,148,0.12) 0%, transparent 70%)",
+        background:"radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%)",
         pointerEvents:"none" }}/>
       <div ref={ref} style={{
         opacity: vis ? 1 : 0, transform: vis ? "translateY(0)" : "translateY(24px)",
         transition:"opacity .7s ease, transform .7s ease"
       }}>
         <div style={{ fontSize:11, fontWeight:500, letterSpacing:"0.18em", textTransform:"uppercase",
-          color:B.sage, marginBottom:16, display:"flex", alignItems:"center", gap:10, justifyContent:"center" }}>
-          <span style={{ width:24, height:1, background:B.sage, opacity:0.5 }}/>
+          color:"rgba(255,255,255,0.8)", marginBottom:16, display:"flex", alignItems:"center", gap:10, justifyContent:"center" }}>
+          <span style={{ width:24, height:1, background:"#fff", opacity:0.5 }}/>
           The Mission
-          <span style={{ width:24, height:1, background:B.sage, opacity:0.5 }}/>
+          <span style={{ width:24, height:1, background:"#fff", opacity:0.5 }}/>
         </div>
         <h2 style={{ fontSize:"clamp(24px,4vw,40px)", fontWeight:800, color:"#fff",
           letterSpacing:"-0.025em", lineHeight:1.15, maxWidth:520, margin:"0 auto 16px" }}>
           One of medicine's most important questions — finally answered
         </h2>
-        <p style={{ fontSize:16, fontWeight:300, color:"rgba(255,255,255,0.55)",
-          maxWidth:420, margin:"0 auto 36px", lineHeight:1.7 }}>
-          We are bringing genomic clarity to early pregnancy loss. The science is ready. The families are waiting.
+        <p style={{ fontSize:16, fontWeight:300, color:"rgba(255,255,255,0.9)",
+          maxWidth:480, margin:"0 auto 0px", lineHeight:1.7 }}>
+          Clearity Care combines advanced genetics, ultra-high resolution Micro-CT imaging and world-leading embryology expertise to help parents better understand why a pregnancy ended in loss.
         </p>
-        <button onClick={onCTA} style={{
-          fontFamily:"'Poppins',sans-serif", fontSize:15, fontWeight:700,
-          color:B.slate, background:B.cream, border:"none",
-          borderRadius:100, padding:"16px 40px", cursor:"pointer",
-          letterSpacing:"0.04em", transition:"transform .2s, box-shadow .25s"
-        }}
-          onMouseEnter={e => { e.target.style.transform = "translateY(-3px)"; e.target.style.boxShadow = "0 16px 40px rgba(0,0,0,0.25)"; }}
-          onMouseLeave={e => { e.target.style.transform = ""; e.target.style.boxShadow = ""; }}
-        >Join the Waitlist</button>
       </div>
     </section>
   );
@@ -824,10 +753,10 @@ function Footer() {
       <div style={{ display:"flex", alignItems:"center" }}>
         <LogoIcon size={32} style={{ filter: "brightness(0) invert(1)" }}/>
       </div>
-      <div style={{ fontSize:11, color:"rgba(252,225,197,0.35)", letterSpacing:"0.04em" }}>
+      <div style={{ fontSize:11, color:"rgba(255,255,255,0.75)", letterSpacing:"0.04em" }}>
         © 2026 Clearity Care · All rights reserved
       </div>
-      <div style={{ fontSize:11, color:"rgba(252,225,197,0.35)" }}>
+      <div style={{ fontSize:11, color:"rgba(255,255,255,0.75)" }}>
         Privacy · GDPR · Contact
       </div>
     </footer>
@@ -875,12 +804,11 @@ export default function App() {
       <Nav onCTA={scrollToForm} />
       <main>
         <Hero onCTA={scrollToForm} />
+        <Closing onCTA={scrollToForm} />
         <Stats />
-        <VideoSection />
         <HowItWorks />
         <Founders />
         <FormSection />
-        <Closing onCTA={scrollToForm} />
       </main>
       <Footer />
     </>
