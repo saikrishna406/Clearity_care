@@ -9,7 +9,7 @@ const B = {
   offwhite: "#faf7f4",
   white:    "#ffffff",
   text:     "#2d3a42",
-  muted:    "#3d5060",
+  muted:    "#1a262e",
 };
 
 /* ─── GLOBAL STYLES (injected once) ──────────────────────────── */
@@ -234,10 +234,18 @@ function Hero({ onCTA }) {
       {/* Sub */}
       <p className="stagger-3" style={{
         fontSize:"clamp(18px,2.5vw,22px)", fontWeight:400, lineHeight:1.5,
-        color:B.sage, maxWidth:500, marginBottom:36,
+        color:B.sage, maxWidth:500, marginBottom:16,
         opacity:0, animation:"fadeUp 1s ease forwards"
       }}>
         It is about time...
+      </p>
+
+      <p className="stagger-3" style={{
+        fontSize:"clamp(15px,2.2vw,18px)", fontWeight:300, lineHeight:1.75,
+        color:B.muted, maxWidth:500, marginBottom:36,
+        opacity:0, animation:"fadeUp 1s ease forwards"
+      }}>
+        Clearity Care brings advanced genomic diagnostics to families who deserve to understand what happened — and why.
       </p>
 
       {/* CTA Row */}
@@ -733,9 +741,9 @@ function Closing({ onCTA }) {
           letterSpacing:"-0.025em", lineHeight:1.15, maxWidth:520, margin:"0 auto 16px" }}>
           One of medicine's most important questions — finally answered
         </h2>
-        <p style={{ fontSize:16, fontWeight:300, color:"rgba(255,255,255,0.9)",
+        <p style={{ fontSize:16, fontWeight:400, color:"#fff",
           maxWidth:480, margin:"0 auto 0px", lineHeight:1.7 }}>
-          Clearity Care combines advanced genetics, ultra-high resolution Micro-CT imaging and world-leading embryology expertise to help parents better understand why a pregnancy ended in loss.
+          We are bringing genomic clarity to early pregnancy loss. The science is ready. The families are waiting.
         </p>
       </div>
     </section>
@@ -753,10 +761,10 @@ function Footer() {
       <div style={{ display:"flex", alignItems:"center" }}>
         <LogoIcon size={32} style={{ filter: "brightness(0) invert(1)" }}/>
       </div>
-      <div style={{ fontSize:11, color:"rgba(255,255,255,0.75)", letterSpacing:"0.04em" }}>
+      <div style={{ fontSize:11, color:"#fff", letterSpacing:"0.04em", fontWeight:400 }}>
         © 2026 Clearity Care · All rights reserved
       </div>
-      <div style={{ fontSize:11, color:"rgba(255,255,255,0.75)" }}>
+      <div style={{ fontSize:11, color:"#fff", fontWeight:400 }}>
         Privacy · GDPR · Contact
       </div>
     </footer>
