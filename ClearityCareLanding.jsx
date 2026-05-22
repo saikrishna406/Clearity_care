@@ -534,6 +534,19 @@ function Founders() {
 /* ─── FORM SECTION ───────────────────────────────────────────── */
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz1M_XepKlfQ1ds0DmZCBNNOosSc5Rkq1XLSGrfi1SXNm2ilbtHAeNPcPl557YbaSST6g/exec";
 
+function Field({ label, optional, error, children }) {
+  return (
+    <div>
+      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:6 }}>
+        <label style={{ fontSize:11, fontWeight:600, color:B.muted, textTransform:"uppercase", letterSpacing:"0.06em" }}>{label}</label>
+        {optional && <span style={{ fontSize:10, color:B.stone, fontWeight:400 }}>Optional</span>}
+      </div>
+      {children}
+      {error && <div style={{ fontSize:11, color:"#c0836a", marginTop:4, fontWeight:400 }}>This field is required</div>}
+    </div>
+  );
+}
+
 function FormSection() {
   const INIT = { name: "", email: "", category: "parent", phone: "" };
   const [form, setForm] = useState(INIT);
@@ -582,17 +595,6 @@ function FormSection() {
     }
   };
 
-  const Field = ({ id, label, optional, children }) => (
-    <div>
-      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:6 }}>
-        <label style={{ fontSize:11, fontWeight:600, color:B.muted, textTransform:"uppercase", letterSpacing:"0.06em" }}>{label}</label>
-        {optional && <span style={{ fontSize:10, color:B.stone, fontWeight:400 }}>Optional</span>}
-      </div>
-      {children}
-      {errors[id] && <div style={{ fontSize:11, color:"#c0836a", marginTop:4, fontWeight:400 }}>This field is required</div>}
-    </div>
-  );
-
   return (
     <section id="form-section" style={{ padding:"80px 24px", background:B.white, position:"relative" }}>
       <div style={{ position:"absolute", top:0, left:0, right:0, height:1,
@@ -635,17 +637,17 @@ function FormSection() {
             }}>
               <div style={{ display:"grid", gap:18 }}>
                 <div className="form-row" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:18 }}>
-                  <Field id="name" label="Name">
+                  <Field label="Name" error={errors.name}>
                     <input className={errors.name ? "error" : ""} value={form.name} placeholder="Your full name"
                       onChange={e => { setForm(f=>({...f,name:e.target.value})); setErrors(er=>({...er,name:false})); }}/>
                   </Field>
-                  <Field id="email" label="Email">
+                  <Field label="Email" error={errors.email}>
                     <input className={errors.email ? "error" : ""} type="email" value={form.email} placeholder="you@email.com"
                       onChange={e => { setForm(f=>({...f,email:e.target.value})); setErrors(er=>({...er,email:false})); }}/>
                   </Field>
                 </div>
 
-                <Field id="phone" label="Phone" optional>
+                <Field label="Phone" optional error={errors.phone}>
                   <input type="tel" value={form.phone} placeholder="+31 6 00 00 00 00"
                     onChange={e => setForm(f=>({...f,phone:e.target.value}))}/>
                 </Field>
