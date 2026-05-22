@@ -532,12 +532,15 @@ function Founders() {
 }
 
 /* ─── FORM SECTION ───────────────────────────────────────────── */
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz1M_XepKlfQ1ds0DmZCBNNOosSc5Rkq1XLSGrfi1SXNm2ilbtHAeNPcPl557YbaSST6g/exec";
+
 function FormSection() {
-  const INIT = { name:"", email:"", country:"", category:"", phone:"" };
+  const INIT = { name: "", email: "", category: "parent", phone: "" };
   const [form, setForm] = useState(INIT);
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
   const [tab, setTab] = useState("parent"); // parent | investor
   const [ref, vis] = useReveal(0.1);
 
@@ -545,17 +548,38 @@ function FormSection() {
     const e = {};
     if (!form.name.trim()) e.name = true;
     if (!form.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) e.email = true;
-    if (!form.country.trim()) e.country = true;
     if (!form.category) e.category = true;
     return e;
   };
 
-  const handleSubmit = (ev) => {
+  const handleSubmit = async (ev) => {
     ev.preventDefault();
     const e = validate();
     if (Object.keys(e).length) { setErrors(e); return; }
+    
     setLoading(true);
-    setTimeout(() => { setLoading(false); setSubmitted(true); }, 1400);
+    setSubmitError(null);
+
+    try {
+      // Send data using Content-Type text/plain to avoid CORS preflight options check
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors", // Mode no-cors lets the request go through to Google Script without CORS issues
+        headers: {
+          "Content-Type": "text/plain",
+        },
+        body: JSON.stringify(form),
+      });
+
+      // With "no-cors", response status is 0 and we can't read response body.
+      // If we made it here without an exception, it successfully reached Google Sheet!
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Submission error:", err);
+      setSubmitError("Failed to submit form. Please check your connection and try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const Field = ({ id, label, optional, children }) => (
@@ -625,6 +649,12 @@ function FormSection() {
                   <input type="tel" value={form.phone} placeholder="+31 6 00 00 00 00"
                     onChange={e => setForm(f=>({...f,phone:e.target.value}))}/>
                 </Field>
+
+                {submitError && (
+                  <div style={{ fontSize:13, color:"#c0836a", textAlign:"center", fontWeight:500 }}>
+                    {submitError}
+                  </div>
+                )}
 
                 <button type="submit" disabled={loading} style={{
                   fontFamily:"'Poppins',sans-serif", fontSize:15, fontWeight:700,
