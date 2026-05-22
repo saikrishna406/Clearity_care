@@ -532,7 +532,7 @@ function Founders() {
 }
 
 /* ─── FORM SECTION ───────────────────────────────────────────── */
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz1M_XepKlfQ1ds0DmZCBNNOosSc5Rkq1XLSGrfi1SXNm2ilbtHAeNPcPl557YbaSST6g/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzggm69f5NUxCIOov6UtBK_fO_arRk8ozAr0QblLoBf2KVei9yFkI6aIQo5Z9NZ4tM/exec";
 
 function Field({ label, optional, error, children }) {
   return (
