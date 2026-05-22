@@ -548,7 +548,7 @@ function Field({ label, optional, error, children }) {
 }
 
 function FormSection() {
-  const INIT = { name: "", email: "", category: "parent", phone: "" };
+  const INIT = { name: "", email: "", category: "parent", phone: "+31 " };
   const [form, setForm] = useState(INIT);
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
@@ -573,6 +573,11 @@ function FormSection() {
     setLoading(true);
     setSubmitError(null);
 
+    // Clean phone number (if they left it as just "+31" or "+31 ", treat it as empty)
+    const cleanedPhone = form.phone.trim();
+    const finalPhone = (cleanedPhone === "+31" || cleanedPhone === "") ? "" : cleanedPhone;
+    const payload = { ...form, phone: finalPhone };
+
     try {
       // Send data using Content-Type text/plain to avoid CORS preflight options check
       await fetch(GOOGLE_SCRIPT_URL, {
@@ -581,7 +586,7 @@ function FormSection() {
         headers: {
           "Content-Type": "text/plain",
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       });
 
       // With "no-cors", response status is 0 and we can't read response body.
