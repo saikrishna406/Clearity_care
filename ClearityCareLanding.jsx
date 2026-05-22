@@ -793,8 +793,19 @@ function Footer() {
       <div style={{ fontSize:11, color:"#fff", letterSpacing:"0.04em", fontWeight:400 }}>
         © 2026 Clearity Care · All rights reserved
       </div>
-      <div style={{ fontSize:11, color:"#fff", fontWeight:400 }}>
-        Privacy · GDPR · Contact
+      <div style={{ fontSize:11, color:"#fff", fontWeight:400, display:"flex", alignItems:"center", gap:8 }}>
+        <span>Privacy · GDPR · Contact</span>
+        <span style={{ opacity:0.3 }}>|</span>
+        <a 
+          href="https://sociazy.com/" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          style={{ color: "#fff", textDecoration: "none", opacity: 0.8, transition: "opacity 0.25s" }}
+          onMouseEnter={e => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.textDecoration = "underline"; }}
+          onMouseLeave={e => { e.currentTarget.style.opacity = "0.8"; e.currentTarget.style.textDecoration = "none"; }}
+        >
+          Designed by Sociazy
+        </a>
       </div>
     </footer>
   );
